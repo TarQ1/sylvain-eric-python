@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "sylvain_eric_python"
+version = "0.1.0"
+description = ""
+authors = ["sylvain <sylvain.ecuer@epita.fr>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.75.1"
+isort = "^5.10.1"
+black = "^22.3.0"
+autoflake = "^1.4"
+mypy = "^0.942"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.isort]
+profile = "black"
+line_length = 100
+sections = ['FUTURE', 'STDLIB', 'THIRDPARTY', 'FIRSTPARTY',
+'LOCALFOLDER']
+combine_as_imports = true
+
+[tool.black]
+line-length = 100
