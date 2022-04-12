@@ -1,6 +1,7 @@
-from typing import Union, Optional
+from typing import Optional
 
 from pydantic import BaseModel
+
 
 class PokemonCard(BaseModel):
     id: Optional[int] = None

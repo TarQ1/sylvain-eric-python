@@ -1,8 +1,9 @@
 from typing import Dict
 
 from fastapi import FastAPI
-from sqlalchemy import create_engine
-from sylvain_eric_python.models.card import PokemonCard
+from sqlalchemy import create_engine  # type: ignore
+
+from sylvain_eric_python.models.card import PokemonCard  # type: ignore
 
 description = """
 My Hello World API
@@ -14,9 +15,11 @@ app = FastAPI(title="Sylvain-Eric-Python", description=description, version="22-
 eng = create_engine("sqlite:///db/db.sqlite")
 con = eng.connect()
 
+
 @app.get("/")
 def home() -> Dict:
-    return {"hello": "world"}
+    return {"hello": "world!"}
+
 
 @app.post("/pokemon_card", status_code=201)
 def create_card(body: PokemonCard) -> bool:
