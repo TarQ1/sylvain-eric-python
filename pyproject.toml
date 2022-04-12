@@ -9,6 +9,10 @@ python = "^3.10"
 pytest = "^7.1.1"
 fastapi = "^0.75.1"
 uvicorn = {extras = ["standard"], version = "^0.17.6"}
+pylint = "^2.13.5"
+SQLAlchemy = "^1.4.35"
+black = "^22.3.0"
+rope = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.1"
