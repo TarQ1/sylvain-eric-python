@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData, CheckConstraint
+from sqlalchemy import CheckConstraint, Column, Integer, MetaData, String, Table, create_engine
 from sqlalchemy.sql import select
 
 
@@ -18,18 +18,14 @@ def init_db():
         "cards",
         meta,
         Column("id", Integer, primary_key=True),
-        Column("card_type", String),
         Column("name", String),
-        Column("type", String),
-        Column("lvl", Integer),
+        Column("energy_type", String),
+        Column("level", Integer),
         Column("hp", Integer),
         Column("description", String),
         Column("attack_1", String),
         Column("attack_2", String),
-        CheckConstraint("card_type IN ('pokemon', 'trainer', 'energy')"),
         CheckConstraint(f"type IN ({type_list_string})")
     )
 
     cards.create()
-
-init_db()
