@@ -1,5 +1,12 @@
-from sqlalchemy import CheckConstraint, Column, Integer, MetaData, String, Table, create_engine
-from sqlalchemy.sql import select
+from sqlalchemy import (  # type: ignore
+    CheckConstraint,
+    Column,
+    Integer,
+    MetaData,
+    String,
+    Table,
+    create_engine,
+)
 
 
 def init_db():
@@ -10,8 +17,6 @@ def init_db():
     type_list_string = type_list_string[:-2]
 
     eng = create_engine("sqlite:///db/db.sqlite")
-
-    con = eng.connect()
 
     meta = MetaData(eng)
     cards = Table(
@@ -25,7 +30,7 @@ def init_db():
         Column("description", String),
         Column("attack_1", String),
         Column("attack_2", String),
-        CheckConstraint(f"type IN ({type_list_string})")
+        CheckConstraint(f"type IN ({type_list_string})"),
     )
 
     cards.create()

@@ -1,7 +1,7 @@
 from typing import Dict
 
 from fastapi import FastAPI
-from sqlalchemy import create_engine  # type: ignore
+from sqlalchemy import MetaData, create_engine  # type: ignore
 
 from sylvain_eric_python.models.card import PokemonCard  # type: ignore
 
@@ -14,6 +14,7 @@ app = FastAPI(title="Sylvain-Eric-Python", description=description, version="22-
 
 eng = create_engine("sqlite:///db/db.sqlite")
 con = eng.connect()
+meta = MetaData(eng)
 
 
 @app.get("/")
