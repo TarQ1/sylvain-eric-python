@@ -1,0 +1,158 @@
+[
+    {
+        "name": "Pikachu",
+        "hp": 10,
+        "energy_type": "lightning",
+        "level": 3,
+        "description": "pika pika",
+        "attack_1": "tema la taille de l'arc électrique"
+    },
+    {
+        "name": "Bulbizarre",
+        "hp": 10,
+        "energy_type": "grass",
+        "level": 3,
+        "description": "bulbizarre bulbizarre",
+        "attack_1": "tema la taille de l'arc électrique"
+    },
+    {
+        "name": "Salamèche",
+        "hp": 10,
+        "energy_type": "fire",
+        "level": 3,
+        "description": "salamèche salamèche",
+        "attack_1": "tema la taille de l'arc électrique"
+    },
+    {
+        "name": "Carapuce",
+        "hp": 10,
+        "energy_type": "water",
+        "level": 3,
+        "description": "carapuce carapuce",
+        "attack_1": "tema la taille de l'arc électrique"
+    },
+    {
+        "name": "Aspicot",
+        "hp": 10,
+        "energy_type": "psychic",
+        "level": 3,
+        "description": "aspicot aspicot",
+        "attack_1": "tema la taille de l'arc électrique"
+    },
+    {
+        "name": "Roucool",
+        "hp": 10,
+        "energy_type": "normal",
+        "level": 3,
+        "description": "roucool roucool",
+        "attack_1": "tema la taille de l'arc électrique"
+    },
+    {
+        "name": "Rattata",
+        "hp": 10,
+        "energy_type": "normal",
+        "level": 3,
+        "description": "rattata rattata",
+        "attack_1": "tema la taille de l'arc électrique"
+    },
+    {
+        "name": "Roucoups",
+        "hp": 10,
+        "energy_type": "normal",
+        "level": 3,
+        "description": "pokemon volant",
+        "attack_1": "morsure"
+    },
+    {
+        "name": "Carapuce",
+        "hp": 10,
+        "energy_type": "water",
+        "level": 3,
+        "description": "carapuce carapuce",
+        "attack_1": "tema la taille de l'arc électrique"
+    },
+    {
+        "name": "Aspicot",
+        "hp": 10,
+        "energy_type": "poison",
+        "level": 3,
+        "description": "aspicot aspicot",
+        "attack_1": "tema la taille de l'arc électrique"
+    },
+    {
+        "name": "Roucool",
+        "hp": 10,
+        "energy_type": "psychic",
+        "level": 3,
+        "description": "roucool roucool",
+        "attack_1": "tema la taille de l'arc électrique"
+    },
+    {
+        "name": "Rattata",
+        "hp": 10,
+        "energy_type": "normal",
+        "level": 3,
+        "description": "rattata rattata",
+        "attack_1": "tema la taille de l'arc électrique"
+    },
+    {
+        "name": "Ponyta",
+        "hp": 10,
+        "energy_type": "fire",
+        "level": 3,
+        "description": "ponyta ponyta",
+        "attack_1": "cheval"
+    },
+    {
+        "name": "Groudon",
+        "hp": 200,
+        "energy_type": "fighting",
+        "level": 42,
+        "description": "not pika pika",
+        "attack_1": "graour",
+        "attack_2": "the world"
+    },
+    {
+        "name": "Golem",
+        "hp": 200,
+        "energy_type": "fighting",
+        "level": 42,
+        "description": "not pika pika",
+        "attack_1": "graour",
+        "attack_2": "the world"
+    },
+    {
+        "name": "Golem",
+        "hp": 200,
+        "energy_type": "fighting",
+        "level": 42,
+        "description": "not pika pika",
+        "attack_1": "graour",
+        "attack_2": "the world"
+    },
+    {
+        "name": "Golem",
+        "hp": 200,
+        "energy_type": "fighting",
+        "level": 42,
+        "description": "not pika pika",
+        "attack_1": "tema la taille du rocher"
+    },
+    {
+        "name": "Crouton",
+        "hp": 200,
+        "energy_type": "water",
+        "level": 55,
+        "description": "à l'ail",
+        "attack_1": "jump in pot"
+    },
+    {
+        "name" : "Goudron",
+        "hp" : 2000,
+        "energy_type" : "darkness",
+        "level" : 100,
+        "description" : "c'est un goudron",
+        "attack_1" : "infrastucture urbaine",
+        "attack_2" : "ces pokemon sont générés grâce a gpt 3"
+    }
+]

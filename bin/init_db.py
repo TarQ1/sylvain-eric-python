@@ -10,7 +10,17 @@ from sqlalchemy import (  # type: ignore
 
 
 def init_db():
-    type_list = ["fire", "water", "fighting", "psychic", "darkness", "grass", "lightning", "metal"]
+    type_list = [
+        "fire",
+        "water",
+        "fighting",
+        "psychic",
+        "darkness",
+        "grass",
+        "lightning",
+        "metal",
+        "normal",
+    ]
     type_list_string = ""
     for t in type_list:
         type_list_string += f"'{t}', "
@@ -30,7 +40,7 @@ def init_db():
         Column("description", String),
         Column("attack_1", String),
         Column("attack_2", String),
-        CheckConstraint(f"type IN ({type_list_string})"),
+        CheckConstraint(f"energy_type IN ({type_list_string})"),
     )
 
     cards.create()
