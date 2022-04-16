@@ -6,16 +6,19 @@ import sylvain_eric_python.repositories.pokemoncard as repo  # type: ignore
 from sylvain_eric_python.models.card import PokemonCard  # type: ignore
 
 description = """
-My Hello World API
-This is the best documentation
+Pokémon Card API:
+Interact with a pokémon card database
 """
 
-
-app = FastAPI(title="Sylvain-Eric-Python", description=description, version="22-04-11")
+app = FastAPI(title="Pokémon Card API", description=description, version="1.0.0")
 
 
 @app.post("/pokemon_card", status_code=201)
 def create_card(body: PokemonCard) -> int:
+    """
+    Create a new card
+    """
+
     id = repo.create_card(body)
 
     if id <= 0:
@@ -26,6 +29,10 @@ def create_card(body: PokemonCard) -> int:
 
 @app.get("/pokemon_card/{id}", status_code=200)
 def get_card(id: int) -> PokemonCard:
+    """
+    Get a card by id
+    """
+
     card = repo.get_card(id)
 
     if card == None:
@@ -36,6 +43,10 @@ def get_card(id: int) -> PokemonCard:
 
 @app.get("/pokemon_cards", status_code=200)
 def get_cards() -> List[PokemonCard]:
+    """
+    Get all cards in the database
+    """
+
     card_list = repo.get_cards()
 
     if card_list == None:
@@ -46,6 +57,10 @@ def get_cards() -> List[PokemonCard]:
 
 @app.put("/pokemon_card/{id}", status_code=200)
 def update_card(body: PokemonCard) -> PokemonCard:
+    """
+    Update a card's information
+    """
+
     res = repo.update_card(body)
 
     if res == None:
@@ -56,6 +71,10 @@ def update_card(body: PokemonCard) -> PokemonCard:
 
 @app.delete("/pokemon_card/{id}", status_code=200)
 def delete_card(id: int) -> bool:
+    """
+    Delete a card from the database
+    """
+
     res = repo.delete_card(id)
 
     if not res:
