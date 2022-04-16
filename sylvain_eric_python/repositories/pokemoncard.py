@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from sqlalchemy import Column, Integer, String, create_engine  # type: ignore
 from sqlalchemy.orm import declarative_base, sessionmaker  # type: ignore
@@ -63,10 +63,14 @@ def create_card(model: PokemonCard) -> int:
     """
     Create a card and return the id of the card created
     """
-    dbo = model_to_dbo(model)
-    ses.add(dbo)
-    ses.commit()
-    ses.refresh(dbo)
+    try:
+        dbo = model_to_dbo(model)
+        ses.add(dbo)
+        ses.commit()
+        ses.refresh(dbo)
+    except:
+        return -1
+
     return dbo.id
 
 
@@ -82,19 +86,21 @@ def get_card(id: int) -> PokemonCard:
     return dbo_to_model(dbo)
 
 
-def get_cards() -> List[PokemonCard]:
+def get_cards() -> Optional[List[PokemonCard]]:
     """
     Get all cards
     """
 
     dbo_list: List[PokemonCard] = ses.query(PokemonCardDbo).order_by(PokemonCardDbo.id).all()
 
+    if dbo_list == None:
+        return None
+
     map(lambda x: dbo_to_model(x), dbo_list)
 
     return dbo_list
 
 
-## update a card and returns the updated model
 def update_card(model: PokemonCard) -> PokemonCard:
     """
     Update a card and return the updated model
@@ -126,10 +132,10 @@ def update_card(model: PokemonCard) -> PokemonCard:
         ses.commit()
         return model
     except Exception as e:
+        print(e)
         return None
 
 
-## delete a card and returns a bool if sucessfull false otherwise
 def delete_card(id: int) -> bool:
     """
     Delete a card and return a bool if sucessfull false otherwise
