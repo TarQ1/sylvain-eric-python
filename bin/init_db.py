@@ -22,8 +22,10 @@ def init_db():
         "normal",
     ]
     type_list_string = ""
+
     for t in type_list:
         type_list_string += f"'{t}', "
+
     type_list_string = type_list_string[:-2]
 
     eng = create_engine("sqlite:///db/db.sqlite")
