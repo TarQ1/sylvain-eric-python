@@ -124,7 +124,6 @@ def update_card(model: PokemonCard, ses) -> PokemonCard:
         ses.commit()
         return model
     except Exception as e:
-        print(e)
         return None
 
 
