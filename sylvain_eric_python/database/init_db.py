@@ -9,7 +9,7 @@ from sqlalchemy import (  # type: ignore
 )
 
 
-def init_db():
+def init_db(SQLALCHEMY_DATABASE_URL):
     type_list = [
         "fire",
         "water",
@@ -28,9 +28,10 @@ def init_db():
 
     type_list_string = type_list_string[:-2]
 
-    eng = create_engine("sqlite:///db/db.sqlite")
+    engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 
-    meta = MetaData(eng)
+    meta = MetaData(engine)
+
     cards = Table(
         "cards",
         meta,
@@ -45,4 +46,9 @@ def init_db():
         CheckConstraint(f"energy_type IN ({type_list_string})"),
     )
 
-    cards.create()
+    try:
+        cards.create()
+    except Exception as e:
+        print("Database already exists")
+
+    return engine

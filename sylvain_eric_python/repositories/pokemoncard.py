@@ -1,20 +1,12 @@
 from typing import List, Optional
 
-from sqlalchemy import Column, Integer, String, create_engine  # type: ignore
-from sqlalchemy.orm import declarative_base, sessionmaker  # type: ignore
+from sqlalchemy import Column, Integer, String  # type: ignore
+from sqlalchemy.ext.declarative import declarative_base  # type: ignore
 
 from sylvain_eric_python.models.card import PokemonCard  # type: ignore
 
-eng = create_engine("sqlite:///db/db.sqlite")
-Base = declarative_base()  # type: ignore
 
-Base.metadata.bind = eng
-Base.metadata.create_all()
-Session = sessionmaker(bind=eng)
-ses = Session()
-
-
-class PokemonCardDbo(Base):  # type: ignore
+class PokemonCardDbo(declarative_base()):  # type: ignore
     __tablename__ = "cards"
 
     id = Column(Integer, primary_key=True)
@@ -59,7 +51,7 @@ def dbo_to_model(dbo: PokemonCardDbo) -> PokemonCard:
     return model
 
 
-def create_card(model: PokemonCard) -> int:
+def create_card(model: PokemonCard, ses) -> int:
     """
     Create a card and return the id of the card created
     """
@@ -68,13 +60,13 @@ def create_card(model: PokemonCard) -> int:
         ses.add(dbo)
         ses.commit()
         ses.refresh(dbo)
-    except:
+    except Exception as e:
         return -1
 
     return dbo.id
 
 
-def get_card(id: int) -> PokemonCard:
+def get_card(id: int, ses) -> PokemonCard:
     """
     Get a card by id
     """
@@ -86,22 +78,22 @@ def get_card(id: int) -> PokemonCard:
     return dbo_to_model(dbo)
 
 
-def get_cards() -> Optional[List[PokemonCard]]:
+def get_cards(ses) -> Optional[List[PokemonCard]]:
     """
     Get all cards
     """
 
-    dbo_list: List[PokemonCard] = ses.query(PokemonCardDbo).order_by(PokemonCardDbo.id).all()
+    dbo_list: List[PokemonCardDbo] = ses.query(PokemonCardDbo).order_by(PokemonCardDbo.id).all()
 
     if dbo_list == None:
         return None
 
-    map(lambda x: dbo_to_model(x), dbo_list)
+    poke_list: List[PokemonCard] = list(map(lambda x: dbo_to_model(x), dbo_list))
 
-    return dbo_list
+    return poke_list
 
 
-def update_card(model: PokemonCard) -> PokemonCard:
+def update_card(model: PokemonCard, ses) -> PokemonCard:
     """
     Update a card and return the updated model
     """
@@ -136,7 +128,7 @@ def update_card(model: PokemonCard) -> PokemonCard:
         return None
 
 
-def delete_card(id: int) -> bool:
+def delete_card(id: int, ses) -> bool:
     """
     Delete a card and return a bool if sucessfull false otherwise
     """
