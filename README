@@ -1,21 +1,23 @@
-# Pokémon Card API
+Pokémon Card API
+----------------
+
 MTI 2023 Python project
 eric.cloyd
 sylvain.ecuer
 
-## Install
-```sh
-poetry install
-```
+Install
+-------
 
-## Execute
-```sh
-poetry run start
-```
+$ poetry install
+
+Execute
+-------
+
+$ poetry run start
 
 The API is available on port 80. Docs are in the `/docs` path.
 
-## Run Tests
-```sh
-poetry run pytest
-```
+Run Tests
+---------
+
+$ poetry run pytest
