@@ -49,6 +49,14 @@ class AuthService(auth_pb2_grpc.AuthServiceServicer):
 
         return auth_pb2.LoginResponse(error="Wrong username/password combination")
 
+    def VerifyToken(self, request, context):
+        try:
+            jwt.decode(request.jwt, "secret", algorithms=["HS256"])
+        except Exception as e:
+            return auth_pb2.VerifyTokenResponse(ok=False)
+
+        return auth_pb2.VerifyTokenResponse(ok=True)
+
 
 port = '8001'
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

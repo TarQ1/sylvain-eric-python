@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1esylvain_eric_python/auth.proto\x12\tmypackage\"2\n\x0cLoginRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"9\n\rLoginResponse\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x0b\n\x03jwt\x18\x02 \x01(\t\x12\r\n\x05\x65rror\x18\x03 \x01(\t\"5\n\x0fRegisterRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"/\n\x10RegisterResponse\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\r\n\x05\x65rror\x18\x02 \x01(\t2\x92\x01\n\x0b\x41uthService\x12<\n\x05Login\x12\x17.mypackage.LoginRequest\x1a\x18.mypackage.LoginResponse\"\x00\x12\x45\n\x08Register\x12\x1a.mypackage.RegisterRequest\x1a\x1b.mypackage.RegisterResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1esylvain_eric_python/auth.proto\x12\tmypackage\"2\n\x0cLoginRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"9\n\rLoginResponse\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x0b\n\x03jwt\x18\x02 \x01(\t\x12\r\n\x05\x65rror\x18\x03 \x01(\t\"5\n\x0fRegisterRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"/\n\x10RegisterResponse\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\r\n\x05\x65rror\x18\x02 \x01(\t\"!\n\x12VerifyTokenRequest\x12\x0b\n\x03jwt\x18\x01 \x01(\t\"!\n\x13VerifyTokenResponse\x12\n\n\x02ok\x18\x01 \x01(\x08\x32\xe2\x01\n\x0b\x41uthService\x12<\n\x05Login\x12\x17.mypackage.LoginRequest\x1a\x18.mypackage.LoginResponse\"\x00\x12\x45\n\x08Register\x12\x1a.mypackage.RegisterRequest\x1a\x1b.mypackage.RegisterResponse\"\x00\x12N\n\x0bVerifyToken\x12\x1d.mypackage.VerifyTokenRequest\x1a\x1e.mypackage.VerifyTokenResponse\"\x00\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'sylvain_eric_python.auth_pb2', globals())
@@ -28,6 +28,10 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _REGISTERREQUEST._serialized_end=209
   _REGISTERRESPONSE._serialized_start=211
   _REGISTERRESPONSE._serialized_end=258
-  _AUTHSERVICE._serialized_start=261
-  _AUTHSERVICE._serialized_end=407
+  _VERIFYTOKENREQUEST._serialized_start=260
+  _VERIFYTOKENREQUEST._serialized_end=293
+  _VERIFYTOKENRESPONSE._serialized_start=295
+  _VERIFYTOKENRESPONSE._serialized_end=328
+  _AUTHSERVICE._serialized_start=331
+  _AUTHSERVICE._serialized_end=557
 # @@protoc_insertion_point(module_scope)

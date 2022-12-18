@@ -24,6 +24,11 @@ class AuthServiceStub(object):
                 request_serializer=sylvain__eric__python_dot_auth__pb2.RegisterRequest.SerializeToString,
                 response_deserializer=sylvain__eric__python_dot_auth__pb2.RegisterResponse.FromString,
                 )
+        self.VerifyToken = channel.unary_unary(
+                '/mypackage.AuthService/VerifyToken',
+                request_serializer=sylvain__eric__python_dot_auth__pb2.VerifyTokenRequest.SerializeToString,
+                response_deserializer=sylvain__eric__python_dot_auth__pb2.VerifyTokenResponse.FromString,
+                )
 
 
 class AuthServiceServicer(object):
@@ -41,6 +46,12 @@ class AuthServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def VerifyToken(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_AuthServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -53,6 +64,11 @@ def add_AuthServiceServicer_to_server(servicer, server):
                     servicer.Register,
                     request_deserializer=sylvain__eric__python_dot_auth__pb2.RegisterRequest.FromString,
                     response_serializer=sylvain__eric__python_dot_auth__pb2.RegisterResponse.SerializeToString,
+            ),
+            'VerifyToken': grpc.unary_unary_rpc_method_handler(
+                    servicer.VerifyToken,
+                    request_deserializer=sylvain__eric__python_dot_auth__pb2.VerifyTokenRequest.FromString,
+                    response_serializer=sylvain__eric__python_dot_auth__pb2.VerifyTokenResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -95,5 +111,22 @@ class AuthService(object):
         return grpc.experimental.unary_unary(request, target, '/mypackage.AuthService/Register',
             sylvain__eric__python_dot_auth__pb2.RegisterRequest.SerializeToString,
             sylvain__eric__python_dot_auth__pb2.RegisterResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def VerifyToken(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/mypackage.AuthService/VerifyToken',
+            sylvain__eric__python_dot_auth__pb2.VerifyTokenRequest.SerializeToString,
+            sylvain__eric__python_dot_auth__pb2.VerifyTokenResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

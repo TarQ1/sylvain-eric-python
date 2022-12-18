@@ -23,7 +23,16 @@ message RegisterResponse {
     string error = 2;
 }
 
+message VerifyTokenRequest {
+    string jwt = 1;
+}
+
+message VerifyTokenResponse {
+    bool ok = 1;
+}
+
 service AuthService {
     rpc Login(LoginRequest) returns (LoginResponse) {}
     rpc Register(RegisterRequest) returns (RegisterResponse) {}
+    rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse) {}
 }

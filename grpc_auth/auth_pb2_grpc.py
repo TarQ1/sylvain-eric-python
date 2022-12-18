@@ -6,8 +6,7 @@ import auth_pb2 as auth__pb2
 
 
 class AuthServiceStub(object):
-    """The Auth service definition.
-    """
+    """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
         """Constructor.
@@ -16,19 +15,39 @@ class AuthServiceStub(object):
             channel: A grpc.Channel.
         """
         self.Login = channel.unary_unary(
-                '/grpc.auth.AuthService/Login',
+                '/mypackage.AuthService/Login',
                 request_serializer=auth__pb2.LoginRequest.SerializeToString,
                 response_deserializer=auth__pb2.LoginResponse.FromString,
+                )
+        self.Register = channel.unary_unary(
+                '/mypackage.AuthService/Register',
+                request_serializer=auth__pb2.RegisterRequest.SerializeToString,
+                response_deserializer=auth__pb2.RegisterResponse.FromString,
+                )
+        self.VerifyToken = channel.unary_unary(
+                '/mypackage.AuthService/VerifyToken',
+                request_serializer=auth__pb2.VerifyTokenRequest.SerializeToString,
+                response_deserializer=auth__pb2.VerifyTokenResponse.FromString,
                 )
 
 
 class AuthServiceServicer(object):
-    """The Auth service definition.
-    """
+    """Missing associated documentation comment in .proto file."""
 
     def Login(self, request, context):
-        """send a auth request
-        """
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Register(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def VerifyToken(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -41,16 +60,25 @@ def add_AuthServiceServicer_to_server(servicer, server):
                     request_deserializer=auth__pb2.LoginRequest.FromString,
                     response_serializer=auth__pb2.LoginResponse.SerializeToString,
             ),
+            'Register': grpc.unary_unary_rpc_method_handler(
+                    servicer.Register,
+                    request_deserializer=auth__pb2.RegisterRequest.FromString,
+                    response_serializer=auth__pb2.RegisterResponse.SerializeToString,
+            ),
+            'VerifyToken': grpc.unary_unary_rpc_method_handler(
+                    servicer.VerifyToken,
+                    request_deserializer=auth__pb2.VerifyTokenRequest.FromString,
+                    response_serializer=auth__pb2.VerifyTokenResponse.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'grpc.auth.AuthService', rpc_method_handlers)
+            'mypackage.AuthService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
 class AuthService(object):
-    """The Auth service definition.
-    """
+    """Missing associated documentation comment in .proto file."""
 
     @staticmethod
     def Login(request,
@@ -63,59 +91,11 @@ class AuthService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/grpc.auth.AuthService/Login',
+        return grpc.experimental.unary_unary(request, target, '/mypackage.AuthService/Login',
             auth__pb2.LoginRequest.SerializeToString,
             auth__pb2.LoginResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-
-class RegisterServiceStub(object):
-    """The Register service definition.
-    """
-
-    def __init__(self, channel):
-        """Constructor.
-
-        Args:
-            channel: A grpc.Channel.
-        """
-        self.Register = channel.unary_unary(
-                '/grpc.auth.RegisterService/Register',
-                request_serializer=auth__pb2.RegisterRequest.SerializeToString,
-                response_deserializer=auth__pb2.RegisterResponse.FromString,
-                )
-
-
-class RegisterServiceServicer(object):
-    """The Register service definition.
-    """
-
-    def Register(self, request, context):
-        """send a register request
-        """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-
-def add_RegisterServiceServicer_to_server(servicer, server):
-    rpc_method_handlers = {
-            'Register': grpc.unary_unary_rpc_method_handler(
-                    servicer.Register,
-                    request_deserializer=auth__pb2.RegisterRequest.FromString,
-                    response_serializer=auth__pb2.RegisterResponse.SerializeToString,
-            ),
-    }
-    generic_handler = grpc.method_handlers_generic_handler(
-            'grpc.auth.RegisterService', rpc_method_handlers)
-    server.add_generic_rpc_handlers((generic_handler,))
-
-
- # This class is part of an EXPERIMENTAL API.
-class RegisterService(object):
-    """The Register service definition.
-    """
 
     @staticmethod
     def Register(request,
@@ -128,8 +108,25 @@ class RegisterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/grpc.auth.RegisterService/Register',
+        return grpc.experimental.unary_unary(request, target, '/mypackage.AuthService/Register',
             auth__pb2.RegisterRequest.SerializeToString,
             auth__pb2.RegisterResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def VerifyToken(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/mypackage.AuthService/VerifyToken',
+            auth__pb2.VerifyTokenRequest.SerializeToString,
+            auth__pb2.VerifyTokenResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

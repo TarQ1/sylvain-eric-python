@@ -3,6 +3,8 @@ from typing import List
 import grpc
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
+from fastapi.responses import JSONResponse
+from fastapi.security import HTTPBearer, OAuth2PasswordBearer
 
 import sylvain_eric_python.repositories.pokemoncard as repo  # type: ignore
 from sylvain_eric_python import auth_pb2, auth_pb2_grpc
@@ -15,8 +17,36 @@ Pokémon Card API:
 Interact with a pokémon card database
 """
 
+
 app = FastAPI(title="Pokémon Card API",
               description=description, version="2.0.0")
+
+auth_scheme = HTTPBearer()
+
+# define middleware that call the grpc service to check if the token is valid
+@app.middleware("http")
+async def check_token(request, call_next):
+    if request.url.path == "/auth/login" or request.url.path == "/auth/register" or request.url.path == "/docs" or request.url.path == "/openapi.json":
+        return await call_next(request)
+    
+    token = request.headers.get("Authorization")
+    if token == None:
+        return JSONResponse(status_code=401, content={'reason': 'No token provided'})
+    
+    with grpc.insecure_channel('py_grpc:8001') as channel:
+        token = token.replace("Bearer ", "")
+        stub = auth_pb2_grpc.AuthServiceStub(channel)
+
+        message = auth_pb2.VerifyTokenRequest()
+        message.jwt = token
+
+        response = stub.VerifyToken(message)
+
+        if response.ok == False:
+            return JSONResponse(status_code=401, content={'reason': 'Unauthorized'})
+
+    return await call_next(request)
+
 
 
 # Dependency
@@ -29,9 +59,8 @@ def get_db():
     finally:
         db.close()
 
-
 @app.post("/pokemon_card", status_code=201)
-def create_card(body: PokemonCard, db: Session = Depends(get_db)) -> int:
+def create_card(body: PokemonCard, db: Session = Depends(get_db), token : str = Depends(auth_scheme)) -> int:
     """
     Create a new card
     """
@@ -45,7 +74,7 @@ def create_card(body: PokemonCard, db: Session = Depends(get_db)) -> int:
 
 
 @app.get("/pokemon_card/{id}", status_code=200)
-def get_card(id: int, db: Session = Depends(get_db)) -> PokemonCard:
+def get_card(id: int, db: Session = Depends(get_db), token : str = Depends(auth_scheme)) -> PokemonCard:
     """
     Get a card by id
     """
@@ -59,7 +88,7 @@ def get_card(id: int, db: Session = Depends(get_db)) -> PokemonCard:
 
 
 @app.get("/pokemon_cards", status_code=200)
-def get_cards(db: Session = Depends(get_db)) -> List[PokemonCard]:
+def get_cards(db: Session = Depends(get_db), token : str = Depends(auth_scheme)) -> List[PokemonCard]:
     """
     Get all cards in the database
     """
@@ -73,7 +102,7 @@ def get_cards(db: Session = Depends(get_db)) -> List[PokemonCard]:
 
 
 @app.put("/pokemon_card/{id}", status_code=200)
-def update_card(body: PokemonCard, db: Session = Depends(get_db)) -> PokemonCard:
+def update_card(body: PokemonCard, db: Session = Depends(get_db), token : str = Depends(auth_scheme)) -> PokemonCard:
     """
     Update a card's information
     """
@@ -87,7 +116,7 @@ def update_card(body: PokemonCard, db: Session = Depends(get_db)) -> PokemonCard
 
 
 @app.delete("/pokemon_card/{id}", status_code=200)
-def delete_card(id: int, db: Session = Depends(get_db)) -> bool:
+def delete_card(id: int, db: Session = Depends(get_db), token : str = Depends(auth_scheme)) -> bool:
     """
     Delete a card from the database
     """
@@ -98,6 +127,7 @@ def delete_card(id: int, db: Session = Depends(get_db)) -> bool:
         raise HTTPException(status_code=500, detail="Could not delete card")
 
     return res
+
 
 
 @app.post("/auth/register", status_code=201)
@@ -113,6 +143,8 @@ def register(body: RegisterRequest, db: Session = Depends(get_db)) -> bool:
 
         if response.error != "OK":
             raise HTTPException(status_code=400, detail=response.error)
+        return True
+
 
 
 @app.post("/auth/login", status_code=201)
