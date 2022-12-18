@@ -7,13 +7,16 @@ import jwt
 
 
 class AuthService(auth_pb2_grpc.AuthServiceServicer):
+    def register(self, request, context):
+        # TODO add user to db
+        return auth_pb2.RegisterResponse(user="lmao", error="lmao")
+
     def login(self, request, context):
         # Validate the username and password
-        if request.username != "test" or request.password != "password":
-            raise ValueError("Invalid username or password")
+        # TODO
 
         # Generate a JWT
-        jwt_payload = {"sub": request.username}
+        jwt_payload = {"sub": "lmao"}
         jwt_token = jwt.encode(jwt_payload, "secret", algorithm="HS256")
 
         # Return the JWT
