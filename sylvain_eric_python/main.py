@@ -1,17 +1,20 @@
 from typing import List
 
 from fastapi import Depends, FastAPI, HTTPException
-from sqlalchemy.orm import Session  # type: ignore
+from sqlalchemy.orm import Session
 
 import sylvain_eric_python.repositories.pokemoncard as repo  # type: ignore
 from sylvain_eric_python.models.card import PokemonCard  # type: ignore
+from sylvain_eric_python.models.register import RegisterRequest  # type: ignore
+from sylvain_eric_python.models.login import LoginRequest, LoginResponse  # type: ignore
 
 description = """
 Pokémon Card API:
 Interact with a pokémon card database
 """
 
-app = FastAPI(title="Pokémon Card API", description=description, version="1.0.0")
+app = FastAPI(title="Pokémon Card API",
+              description=description, version="2.0.0")
 
 
 # Dependency
@@ -62,7 +65,7 @@ def get_cards(db: Session = Depends(get_db)) -> List[PokemonCard]:
     card_list = repo.get_cards(db)
 
     if card_list == None:
-        raise HTTPException(status_code=500, detail="Could get all cards")
+        raise HTTPException(status_code=500, detail="Could not get all cards")
 
     return card_list
 
@@ -93,3 +96,15 @@ def delete_card(id: int, db: Session = Depends(get_db)) -> bool:
         raise HTTPException(status_code=500, detail="Could not delete card")
 
     return res
+
+
+@app.post("/auth/register", status_code=201)
+def register(body: RegisterRequest, db: Session = Depends(get_db)) -> bool:
+    # TODO talk to grpc service
+    return False
+
+
+@app.post("/auth/login", status_code=201)
+def login(body: LoginRequest, db: Session = Depends(get_db)) -> LoginResponse:
+    # TODO talk to grpc service
+    return None
