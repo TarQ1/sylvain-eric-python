@@ -1,12 +1,14 @@
 from typing import List
 
+import grpc
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
 import sylvain_eric_python.repositories.pokemoncard as repo  # type: ignore
+from sylvain_eric_python import auth_pb2, auth_pb2_grpc
 from sylvain_eric_python.models.card import PokemonCard  # type: ignore
-from sylvain_eric_python.models.register import RegisterRequest  # type: ignore
 from sylvain_eric_python.models.login import LoginRequest, LoginResponse  # type: ignore
+from sylvain_eric_python.models.register import RegisterRequest  # type: ignore
 
 description = """
 Pokémon Card API:
@@ -100,8 +102,16 @@ def delete_card(id: int, db: Session = Depends(get_db)) -> bool:
 
 @app.post("/auth/register", status_code=201)
 def register(body: RegisterRequest, db: Session = Depends(get_db)) -> bool:
-    # TODO talk to grpc service
-    return False
+    with grpc.insecure_channel('py_grpc:8001') as channel:
+        stub = auth_pb2_grpc.AuthServiceStub(channel)
+
+        message = auth_pb2.RegisterRequest()
+        message.username = body.username
+        message.password = body.password
+
+        response = stub.Register(message)
+        print(response.user)
+        print(response.error)
 
 
 @app.post("/auth/login", status_code=201)
