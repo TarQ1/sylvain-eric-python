@@ -7,11 +7,11 @@ import jwt
 
 
 class AuthService(auth_pb2_grpc.AuthServiceServicer):
-    def register(self, request, context):
+    def Register(self, request, context):
         # TODO add user to db
         return auth_pb2.RegisterResponse(user="lmao", error="lmao")
 
-    def login(self, request, context):
+    def Login(self, request, context):
         # Validate the username and password
         # TODO
 
