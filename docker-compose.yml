@@ -5,6 +5,7 @@ services:
     build:
       context: sylvain_eric_python
       dockerfile: Dockerfile
+    container_name: py_app
     ports:
       - "8000:8000"
   py_db:
