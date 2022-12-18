@@ -15,6 +15,9 @@ poetry install
 ## Execute
 
 ```sh
+# start database
+docker-compose up py_db
+# start app
 poetry run start
 ```
 
@@ -25,5 +28,19 @@ Online documentation is available at `/docs` while the server is running.
 ## Run Tests
 
 ```sh
+# start database
+docker-compose up py_db
+# run tests
 poetry run pytest
 ```
+
+## Docker Version
+
+```sh
+# start all services (app, auth, db)
+docker-compose up
+```
+
+The API is available on port 8000.
+
+Online documentation is available at `/docs` while the server is running.
