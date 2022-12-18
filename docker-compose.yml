@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  sylvain_eric_python:
+    build:
+      context: sylvain_eric_python
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'

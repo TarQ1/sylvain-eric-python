@@ -1,8 +1,7 @@
 FROM python:3.10-slim-bullseye
 
 RUN mkdir sylvain_eric_python
-COPY sylvain_eric_python sylvain_eric_python/
-COPY app.py .
+COPY . sylvain_eric_python/
 
 RUN pip install fastapi uvicorn SQLAlchemy
 
