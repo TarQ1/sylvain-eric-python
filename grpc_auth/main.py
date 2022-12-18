@@ -35,15 +35,19 @@ class AuthService(auth_pb2_grpc.AuthServiceServicer):
         return auth_pb2.RegisterResponse(user=request.username, error="OK")
 
     def Login(self, request, context):
-        # Validate the username and password
-        # TODO
+        db_user: UserDbo = db.query(UserDbo).filter_by(
+            username=request.username).first()
 
-        # Generate a JWT
-        jwt_payload = {"sub": "lmao"}
-        jwt_token = jwt.encode(jwt_payload, "secret", algorithm="HS256")
+        pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+        is_correct = pwd_context.verify(request.password, db_user.password)
 
-        # Return the JWT
-        return auth_pb2.LoginResponse(jwt=jwt_token)
+        if is_correct:
+            jwt_payload = {"sub": db_user.username}
+            jwt_token = jwt.encode(jwt_payload, "secret", algorithm="HS256")
+
+            return auth_pb2.LoginResponse(user=db_user.username, jwt=jwt_token, error="OK")
+
+        return auth_pb2.LoginResponse(error="Wrong username/password combination")
 
 
 port = '8001'

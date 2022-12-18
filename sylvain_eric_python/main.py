@@ -117,5 +117,16 @@ def register(body: RegisterRequest, db: Session = Depends(get_db)) -> bool:
 
 @app.post("/auth/login", status_code=201)
 def login(body: LoginRequest, db: Session = Depends(get_db)) -> LoginResponse:
-    # TODO talk to grpc service
-    return None
+    with grpc.insecure_channel('py_grpc:8001') as channel:
+        stub = auth_pb2_grpc.AuthServiceStub(channel)
+
+        message = auth_pb2.LoginRequest()
+        message.username = body.username
+        message.password = body.password
+
+        response = stub.Login(message)
+
+        if response.error != "OK":
+            raise HTTPException(status_code=400, detail=response.error)
+
+        return LoginResponse(token=response.jwt)
