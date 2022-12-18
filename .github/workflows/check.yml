@@ -1,0 +1,28 @@
+
+# make a ci that runs on every push and pull request
+# make it run tests according to the readme
+# make it run the linter
+# make it run the formatter
+
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  ci:
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+      - name: Run image
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: 1.1.13
+      - name: Install dependencies
+        run: poetry install
+      - name: Run tests
+        run: poetry run pytest
