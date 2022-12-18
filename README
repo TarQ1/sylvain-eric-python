@@ -1,23 +1,46 @@
-Pokémon Card API
-----------------
+# Pokémon Card API
 
 MTI 2023 Python project
+
 eric.cloyd
+
 sylvain.ecuer
 
-Install
--------
+## Install
 
-$ poetry install
+```sh
+poetry install
+```
 
-Execute
--------
+## Execute
 
-$ poetry run start
+```sh
+# start database
+docker-compose up py_db
+# start app
+poetry run start
+```
 
-The API is available on port 80. Docs are in the `/docs` path.
+The API is available on port 80.
 
-Run Tests
----------
+Online documentation is available at `/docs` while the server is running.
 
-$ poetry run pytest
+## Run Tests
+
+```sh
+# start database
+docker-compose up py_db
+# run tests
+poetry run pytest
+```
+
+## Docker Version
+
+```sh
+# start all services (app, auth, db)
+docker-compose up
+```
+
+The API is available on port 8000.
+
+Online documentation is available at `/docs` while the server is running.
