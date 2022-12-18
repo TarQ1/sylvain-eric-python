@@ -17,6 +17,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - DB_SERVER=py_db
+      - PYTHONUNBUFFERED=1
     container_name: py_grpc
     ports:
       - "8001:8001"
