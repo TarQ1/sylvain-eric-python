@@ -28,7 +28,7 @@ def init_db(SQLALCHEMY_DATABASE_URL):
 
     type_list_string = type_list_string[:-2]
 
-    engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+    engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
     meta = MetaData(engine)
 
