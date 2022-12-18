@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 
 services:
   sylvain_eric_python:
@@ -6,4 +6,4 @@ services:
       context: sylvain_eric_python
       dockerfile: Dockerfile
     ports:
-      - '8000:8000'
+      - "8000:8000"
