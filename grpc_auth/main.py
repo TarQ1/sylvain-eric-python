@@ -24,19 +24,21 @@ class AuthService(auth_pb2_grpc.AuthServiceServicer):
     def Register(self, request, context):
         pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         hash = pwd_context.hash(request.password)
+        print(f'GRPC API : UUID: {request.traceId}')
 
         try:
             dbo = UserDbo(username=request.username, password=hash)
             db.add(dbo)
             db.commit()
         except Exception as e:
-            return auth_pb2.RegisterResponse(error=str(e))
+            return auth_pb2.RegisterResponse(error=str(e), traceId=request.traceId)
 
-        return auth_pb2.RegisterResponse(user=request.username, error="OK")
+        return auth_pb2.RegisterResponse(user=request.username, error="OK", traceId=request.traceId)
 
     def Login(self, request, context):
         db_user: UserDbo = db.query(UserDbo).filter_by(
             username=request.username).first()
+        print(f'GRPC API : UUID: {request.traceId}')
 
         pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         is_correct = pwd_context.verify(request.password, db_user.password)
@@ -45,17 +47,17 @@ class AuthService(auth_pb2_grpc.AuthServiceServicer):
             jwt_payload = {"sub": db_user.username}
             jwt_token = jwt.encode(jwt_payload, "secret", algorithm="HS256")
 
-            return auth_pb2.LoginResponse(user=db_user.username, jwt=jwt_token, error="OK")
+            return auth_pb2.LoginResponse(user=db_user.username, jwt=jwt_token, error="OK", traceId=request.traceId)
 
-        return auth_pb2.LoginResponse(error="Wrong username/password combination")
+        return auth_pb2.LoginResponse(error="Wrong username/password combination", traceId=request.traceId)
 
     def VerifyToken(self, request, context):
         try:
+            print(f'GRPC API : UUID: {request.traceId}')
             jwt.decode(request.jwt, "secret", algorithms=["HS256"])
         except Exception as e:
-            return auth_pb2.VerifyTokenResponse(ok=False)
-
-        return auth_pb2.VerifyTokenResponse(ok=True)
+            return auth_pb2.VerifyTokenResponse(ok=False, traceId=request.traceId)
+        return auth_pb2.VerifyTokenResponse(ok=True, traceId=request.traceId)
 
 
 port = '8001'
