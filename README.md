@@ -21,8 +21,11 @@ Online documentation is available at `/docs` while the server is running.
 
 ```sh
 # start database
-docker-compose up py_db
+docker-compose up py_db -d
 
 poetry install
 poetry run pytest
+
+# stop database
+docker-compose down
 ```
