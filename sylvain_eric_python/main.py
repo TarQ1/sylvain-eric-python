@@ -110,8 +110,9 @@ def register(body: RegisterRequest, db: Session = Depends(get_db)) -> bool:
         message.password = body.password
 
         response = stub.Register(message)
-        print(response.user)
-        print(response.error)
+
+        if response.error != "OK":
+            raise HTTPException(status_code=400, detail=response.error)
 
 
 @app.post("/auth/login", status_code=201)

@@ -4,12 +4,32 @@ import auth_pb2
 import auth_pb2_grpc
 import grpc
 import jwt
+from sqlalchemy import Column, Integer, String  # type: ignore
+from sqlalchemy.ext.declarative import declarative_base  # type: ignore
+
+from database import SessionLocal  # type: ignore
+
+db = SessionLocal()
+
+
+class UserDbo(declarative_base()):  # type: ignore
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    username = Column(String)
+    password = Column(String)
 
 
 class AuthService(auth_pb2_grpc.AuthServiceServicer):
     def Register(self, request, context):
-        # TODO add user to db
-        return auth_pb2.RegisterResponse(user="lmao", error="lmao")
+        try:
+            dbo = UserDbo(username=request.username, password=request.password)
+            db.add(dbo)
+            db.commit()
+        except Exception as e:
+            return auth_pb2.RegisterResponse(error=str(e))
+
+        return auth_pb2.RegisterResponse(user="", error="OK")
 
     def Login(self, request, context):
         # Validate the username and password
@@ -30,3 +50,4 @@ server.add_insecure_port('[::]:' + port)
 server.start()
 print("Server started, listening on " + port)
 server.wait_for_termination()
+db.close()
