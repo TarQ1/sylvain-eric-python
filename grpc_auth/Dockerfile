@@ -3,12 +3,12 @@ FROM python:3.10-slim-bullseye
 RUN mkdir grpc_auth
 WORKDIR grpc_auth
 
-COPY . .
+RUN pip install protobuf grpcio grpcio-tools grpclib jwt
 
-RUN pip install protobuf grpcio grpcio-tools grpclib
+COPY auth.proto .
+RUN python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. auth.proto
 
-RUN mkdir dist
-RUN python -m grpc_tools.protoc --proto_path=./ --python_out=dist --grpc_python_out=./dist auth.proto
+COPY main.py .
 
 EXPOSE 8001
 CMD ["python", "main.py"]
