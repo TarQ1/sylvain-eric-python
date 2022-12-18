@@ -440,6 +440,20 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "passlib"
+version = "1.7.4"
+description = "comprehensive password hashing framework supporting over 30 schemes"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+argon2 = ["argon2-cffi (>=18.2.0)"]
+bcrypt = ["bcrypt (>=3.1.0)"]
+build_docs = ["sphinx (>=1.6)", "sphinxcontrib-fulltoc (>=1.2.0)", "cloud-sptheme (>=1.10.1)"]
+totp = ["cryptography"]
+
+[[package]]
 name = "pathspec"
 version = "0.10.3"
 description = "Utility library for gitignore style pattern matching of file paths."
@@ -881,7 +895,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "603181a148169c7b482d5f38dd0008670ee50e6dc09227da0c73cfa22d07e8ac"
+content-hash = "2344d8b906215cc4ab2edd4191cae9a1345d36de8123681b8bd3885d755c2f59"
 
 [metadata.files]
 anyio = []
@@ -959,6 +973,7 @@ mypy-extensions = [
 ]
 nodeenv = []
 packaging = []
+passlib = []
 pathspec = []
 platformdirs = []
 pluggy = [

@@ -4,10 +4,10 @@ import auth_pb2
 import auth_pb2_grpc
 import grpc
 import jwt
+from database import SessionLocal  # type: ignore
+from passlib.context import CryptContext
 from sqlalchemy import Column, Integer, String  # type: ignore
 from sqlalchemy.ext.declarative import declarative_base  # type: ignore
-
-from database import SessionLocal  # type: ignore
 
 db = SessionLocal()
 
@@ -22,14 +22,17 @@ class UserDbo(declarative_base()):  # type: ignore
 
 class AuthService(auth_pb2_grpc.AuthServiceServicer):
     def Register(self, request, context):
+        pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+        hash = pwd_context.hash(request.password)
+
         try:
-            dbo = UserDbo(username=request.username, password=request.password)
+            dbo = UserDbo(username=request.username, password=hash)
             db.add(dbo)
             db.commit()
         except Exception as e:
             return auth_pb2.RegisterResponse(error=str(e))
 
-        return auth_pb2.RegisterResponse(user="", error="OK")
+        return auth_pb2.RegisterResponse(user=request.username, error="OK")
 
     def Login(self, request, context):
         # Validate the username and password
